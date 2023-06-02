@@ -1,0 +1,29 @@
+ """
+           Paper: The Core, the Periphery, and the Disaster (R. Jappelli, L. Pelizzon, and A. Plazzi)
+"""
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+import multiprocessing
+cwd = os.getcwd()
+os.chdir("/SAFE_NAS/SAFE_DATA/08_OptionMetrics/IvyDBEurope/v3.1/History")
+
+""" Load the data and merge with CovidEU sample """
+
+all_files = os.listdir()
+vsurf = [i for i in all_files if i.startswith('INTL.IVYVSURF') and i.endswith('.txt')]
+vsurf = sorted(vsurf)
+
+secprc = [i for i in all_files if i.startswith('INTL.IVYSECPRD') and i.endswith('.txt')]
+secprc = sorted(secprc)
+
+
+optprc = [i for i in all_files if i.startswith('INTL.IVYOPPRCD') and i.endswith('.txt')]
+optprc = sorted(optprc)
+
+n = "INTL.IVYSECNMD.zip"
+names         = pd.read_csv(n, sep='\t', low_memory = True,index_col=None, header=0) 
+names.columns = ["Security ID", "Date", "VALOR", "Name", "ISIN"]
+names         = names[["Security ID", "VALOR",'Name',"ISIN"]]
+ 
